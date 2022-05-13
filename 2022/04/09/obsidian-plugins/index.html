@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.swordandfire.online","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Obsidian插件使用记录开端之前配置Obsidian的时候搜罗了很多各种各样的插件，不得不说Obsidian的插件生态真的好到起飞，这里列出自己使用或遇到过比较有用的插件，一方面是做一个记录方面以后查找，另一方面也回顾一下自己都安了哪些乱七八糟的插件（笑）。 插件下面每个插件的标题均为Obsidian市场中的插件名，可以直接通过名称搜索到对应的插件。 Admonition富文本扩展插件，能够在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Obsidian插件使用记录">
+<meta property="og:url" content="https://blog.swordandfire.online/2022/04/09/obsidian-plugins/index.html">
+<meta property="og:site_name" content="Icear&#39;s blog">
+<meta property="og:description" content="Obsidian插件使用记录开端之前配置Obsidian的时候搜罗了很多各种各样的插件，不得不说Obsidian的插件生态真的好到起飞，这里列出自己使用或遇到过比较有用的插件，一方面是做一个记录方面以后查找，另一方面也回顾一下自己都安了哪些乱七八糟的插件（笑）。 插件下面每个插件的标题均为Obsidian市场中的插件名，可以直接通过名称搜索到对应的插件。 Admonition富文本扩展插件，能够在">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-04-09T11:10:00.000Z">
+<meta property="article:modified_time" content="2022-05-13T10:54:00.000Z">
+<meta property="article:author" content="Icear">
+<meta property="article:tag" content="TemplaterCreated">
+<meta property="article:tag" content="Document">
+<meta property="article:tag" content="ZKCard">
+<meta property="article:tag" content="ObsidianPlugin">
+<meta property="article:tag" content="Obsidian">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.swordandfire.online/2022/04/09/obsidian-plugins/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>Obsidian插件使用记录 | Icear's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Icear's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Icear's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>Sitemap</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://blog.swordandfire.online/2022/04/09/obsidian-plugins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Icear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Icear's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Obsidian插件使用记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-09 19:10:00" itemprop="dateCreated datePublished" datetime="2022-04-09T19:10:00+08:00">2022-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-05-13 18:54:00" itemprop="dateModified" datetime="2022-05-13T18:54:00+08:00">2022-05-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Obsidian插件使用记录"><a href="#Obsidian插件使用记录" class="headerlink" title="Obsidian插件使用记录"></a>Obsidian插件使用记录</h1><h2 id="开端"><a href="#开端" class="headerlink" title="开端"></a>开端</h2><p>之前配置Obsidian的时候搜罗了很多各种各样的插件，不得不说Obsidian的插件生态真的好到起飞，这里列出自己使用或遇到过比较有用的插件，一方面是做一个记录方面以后查找，另一方面也回顾一下自己都安了哪些乱七八糟的插件（笑）。</p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>下面每个插件的标题均为Obsidian市场中的插件名，可以直接通过名称搜索到对应的插件。</p>
+<h3 id="Admonition"><a href="#Admonition" class="headerlink" title="Admonition"></a>Admonition</h3><p>富文本扩展插件，能够在markdown中嵌入块样式的附加文字，从而与正文分开，可以用于填写增加一些评论、旁注、警告或追加醒目信息等功能。</p>
+<p>平时用得不是很多，因为开始要自己配置admonition的名字，比较不开箱即用，可能还要探索一阵。</p>
+<h3 id="Advanced-Table"><a href="#Advanced-Table" class="headerlink" title="Advanced Table"></a>Advanced Table</h3><p>表格功能增强插件，支持快速调整表格格式样式居中居右等功能，插件启动后会在左侧按钮列表中增加一个入口，点击后会在右侧打开控制panal使用。</p>
+<p>实际上现在用表格比较少，所以暂时没用上。</p>
+<h3 id="Auto-Link-Title"><a href="#Auto-Link-Title" class="headerlink" title="Auto Link Title"></a>Auto Link Title</h3><p>增强URL功能插件，在粘贴URL到markdown中的时候自动切换成URL语法并且访问原地址获取网页标题填写到语句中，很方便。</p>
+<h3 id="Calendar"><a href="#Calendar" class="headerlink" title="Calendar"></a>Calendar</h3><p>日历插件，能够在右侧日历面板（不确定是不是插件提供的）上为每个日子创建一个markdown文件，支持从模板创建并且展示一些信息到日历上快速索引。</p>
+<p>是一个比较核心的插件，编辑模板以后可以做很多事情，比如说当每天的事件总结和起始事件，这样每天都等于有一个工作总结或者开端，不过有点尴尬就是这两个作用混在一起的话只有一个模板文件会难受一些，可能起始页这件事应该拆分到其它地方去。还有点麻烦的事情就是这个模板也不是开箱即用的，所以模板上需要自己花费很多精力去慢慢调整，如果能直接毛些别人的模板就好了hhh。</p>
+<h3 id="Checklist"><a href="#Checklist" class="headerlink" title="Checklist"></a>Checklist</h3><p>Todo功能的扩展插件，功能是在右侧面板中提供一个Todo List面板，把各个markdown文件中的Todo事项全部列在一起，顺便还是彩色展示。</p>
+<p>之前完全没意识到安装了这个插件，效果上Todo展示的效果非常直观，可以直接完成和开始任务，不过不确定这个完成时间能不能触发其它插件的时间记录，可能要测试一番，如果可以的话联动效果就非常好了。</p>
+<h3 id="Cycle-Through-Panes"><a href="#Cycle-Through-Panes" class="headerlink" title="Cycle Through Panes"></a>Cycle Through Panes</h3><p>让你可以使用<code>ctrl + tab</code> 的方式在多个文档间切换，<code>ctrl + shift + tab</code>是反向切换。</p>
+<h3 id="Dataview"><a href="#Dataview" class="headerlink" title="Dataview"></a>Dataview</h3><p>可以说是Obsidian的杀手级插件之一了，赋予了Obsidian数据检索能力，能够把Markdown文件当作数据库来进行检索，支持多种SQL语法，并且也支持使用Javascript语法来编写查询逻辑，拥有极强的可玩性。</p>
+<p>DataView本身还会为每个Markdown文件追加诸多元数据和追踪信息用于检索，从而提供更多可操作信息。</p>
+<p>配合模板可以做到快速扫描Vault展示各种各样的信息，非常好用，强力推荐。</p>
+<h3 id="Day-Planer"><a href="#Day-Planer" class="headerlink" title="Day Planer"></a>Day Planer</h3><p>扩展插件，可以将Todo按时间线形式列出，因此能够用来安排日常规划，拥有一个面板来展示信息。</p>
+<h3 id="Editor-Syntax-Highlight"><a href="#Editor-Syntax-Highlight" class="headerlink" title="Editor Syntax Highlight"></a>Editor Syntax Highlight</h3><p>给markdown中代码块提供语法高亮功能。</p>
+<h3 id="Find-Unlinked-Files"><a href="#Find-Unlinked-Files" class="headerlink" title="Find Unlinked Files"></a>Find Unlinked Files</h3><p>查找vault中没有link或被link的文档，方便生成知识网络管理，触发方式是在command中使用<code>find unlinked file</code>。</p>
+<p>暂时没有用过，可以用来偶尔查漏补缺一下以前拉下的笔记。</p>
+<h3 id="Incremental-Writing"><a href="#Incremental-Writing" class="headerlink" title="Incremental Writing"></a>Incremental Writing</h3><p>笔记管理插件，可以配置把笔记分成多个工作队列，从而完成多层流的笔记处理。</p>
+<p>常见的可以把笔记放在未完成队列中这样每次可以补全笔记，更高深的用法可以是把笔记分成初次记录，后期文档化和标签化等多个队列，多个工作流一步步吸收归纳知识。</p>
+<p>高级用法暂时没有使用过，目前暂时还是当作未完成队列在使用，因为这个模式是开箱即用的。</p>
+<h3 id="Kanban"><a href="#Kanban" class="headerlink" title="Kanban"></a>Kanban</h3><p>将Markdown文件转化为看板，可以设置不同的工作条，但是具体的展示效果暂时没有测试过。</p>
+<p>拿类似的独立产品Trello来说，Trello的进度条功能和拖动是非常好用的功能，如果没有这两个功能的话它对我的吸引力就没有那么大了，虽然做到了多合一但是牺牲了直观性。</p>
+<h3 id="Obsidian-Linter"><a href="#Obsidian-Linter" class="headerlink" title="Obsidian Linter"></a>Obsidian Linter</h3><p>Markdown格式化工具，默认配置和Vscode类似都是在保存时自动进行格式化，有很多具体格式细节能够调整，并且支持自动插入一些YAML Tag，配合文档索引等功能非常方便。</p>
+<h3 id="Media-Extended"><a href="#Media-Extended" class="headerlink" title="Media Extended"></a>Media Extended</h3><p>让Markdown支持播放音频及视频，并且支持定位到指定的时间轴位置。</p>
+<p>具体效果因为未使用过暂时未知，目前预想到的场景为看网课视频时做笔记能够快速索引到原文，或是在看视频作评论时能够使用。</p>
+<p>扩展插件：Media Extended for Bilibili，大概是这样的名字，能够在插件市场中搜索到，顾名思义是为哔哩哔哩视频提供了引用支持。</p>
+<h3 id="Mind-Map"><a href="#Mind-Map" class="headerlink" title="Mind Map"></a>Mind Map</h3><p>将Markdown文档按标题顺序生成对应的脑图，某种程度上能够成为脑图绘制工具，或是在编写一份笔记时用来纵览思路，使用场景很多。</p>
+<p>使用时通过command调出对应panel即可，可以放置在一旁作为速览。</p>
+<p>使用上插件有时候会因为部分皮肤和主题之类的原因无法显示，兼容性相对比较差，使用时可能要和主题作一番取舍。</p>
+<h3 id="Natural-Language-Dates"><a href="#Natural-Language-Dates" class="headerlink" title="Natural Language Dates"></a>Natural Language Dates</h3><p>通过<code>@</code>符号加today、tomorrow等关键词快速插入当前日期，属于快捷语法一类的插件，但是某些高级功能插件需要依赖这个插件功能运作，因此也属于必备插件之一。</p>
+<h3 id="Obsidian-Charts"><a href="#Obsidian-Charts" class="headerlink" title="Obsidian-Charts"></a>Obsidian-Charts</h3><p>在Markdown中插入好看的图表，使用方式可以通过<code>Chart</code>代码块创建或command呼叫图形化图表生成。</p>
+<p>这个插件暂时没有使用过，不知道能不能配合dataview的数据检索进行操作，如果可以的话也将是一个非常好用的功能插件。</p>
+<h3 id="Obsidian-Outliner"><a href="#Obsidian-Outliner" class="headerlink" title="Obsidian Outliner"></a>Obsidian Outliner</h3><p>为markdown的list提供额外的快捷键控制，类似其它的markdown软件中快捷键，便于list的操控。</p>
+<h3 id="Pandoc-Plugn"><a href="#Pandoc-Plugn" class="headerlink" title="Pandoc Plugn"></a>Pandoc Plugn</h3><p>为Obsidian提供Pandoc支持，本身不带Pandoc组件需要自行安装，主要功能是提供word、html、latex、markdown等格式的导出，PDF导出功能已经由Obsidian官方支持并且兼容的功能更多，Pandoc主要是为其它场景使用。</p>
+<p>安装后在command中调用即可。</p>
+<h3 id="Reminder"><a href="#Reminder" class="headerlink" title="Reminder"></a>Reminder</h3><p>为markdown的Todo提供时间提醒功能，在Todo上标记时间即可触发，有一个独立面板按时间展示Todo，同时兼容Kanban插件和其它Task插件的语法，组合以后Obsidian在Todo追踪这一块功能就非常完整了。</p>
+<p>目前暂时没有在使用，Todo功能虽然很全但是跨平台方面我还没有配置好，所以没有迁移过来，并且快速添加Todo会相对麻烦一些。</p>
+<h3 id="Self-hosted-LiveSync"><a href="#Self-hosted-LiveSync" class="headerlink" title="Self-hosted LiveSync"></a>Self-hosted LiveSync</h3><p>为Obsidian开启第三方兼容的实时同步功能，让Obsidian能够完全本地化运行，目前官方表示插件已经接近稳定但是可能还有数据损坏可能，此外它仅能用于同步而不是一个备份方案。</p>
+<p>这个插件是刚发现不久的，并没有实际使用过，从功能目的上来说非常未来可期。</p>
+<h3 id="Sliding-Panes"><a href="#Sliding-Panes" class="headerlink" title="Sliding Panes"></a>Sliding Panes</h3><p>将Obsidian在多个文档间跳转的行为变成叠加多个panel，方便阅读时在多个文档间快速切换，非常方便。</p>
+<h3 id="Tasks"><a href="#Tasks" class="headerlink" title="Tasks"></a>Tasks</h3><p>Obsidian的Todo管理增强插件，为Todo增加了日期时间、循环定时、完成时间记录等功能，让Obsidian可以作为一个比较完整的Tasks管理软件运作。</p>
+<p>目前使用上还好，编辑时要配置Todo需要用command进行控制稍微有点麻烦，可能这里还有其它优化方式我没有发现，另外它对完成时间的标记能够被DataView识别，从而做到联动效果，这点非常方便，但是似乎DataView自身也能够对Todo的数据进行追踪，这部分可能需要再作尝试。</p>
+<h3 id="Templater"><a href="#Templater" class="headerlink" title="Templater"></a>Templater</h3><p>Obsidian的模板增强插件，支持众多插件语法和快速创建命令，支持按目录匹配模板等，此处功能介绍可以参考其官方的介绍，是Obsidian的核心扩展插件之一，很多管理技巧都可以通过它的模板功能实现。</p>
+<h3 id="Text-Expand"><a href="#Text-Expand" class="headerlink" title="Text Expand"></a>Text Expand</h3><p>Markdown语法扩展插件，可以在Markdown中对Vault内数据进行搜索并展示，只要预先设定搜索条件和规则即可。</p>
+<p>这个插件之前安装后没有意识到它的存在，没有使用过，但是这种动态能力应该具有非常高的可玩性。</p>
+<h3 id="Vault-Statistics"><a href="#Vault-Statistics" class="headerlink" title="Vault Statistics"></a>Vault Statistics</h3><p>为Obsidian增加词数统计等功能，增强统计效果，算是基础插件之一，统计信息也是文档类编辑工具的基础能力了。</p>
+<h3 id="Workbench"><a href="#Workbench" class="headerlink" title="Workbench"></a>Workbench</h3><p>这个插件在安装后也没有使用过，其功能描述为能够将当前UI中显示的信息（Todos、Block、段落等）生成链接插入到另一个已打开的Markdown文档之中，生成链接后在该文档里会直接显示成正文并且能够编辑和操作。</p>
+<p>这个的作用似乎局限于已经打开的文档中？引用功能的话类似的插件还挺多的，不知道它的作用如何。</p>
+<h3 id="Youglsih-Plugin"><a href="#Youglsih-Plugin" class="headerlink" title="Youglsih Plugin"></a>Youglsih Plugin</h3><p>一个词典插件，能够快速给出某个词的定义和用例，甚至能够定位到相关网络视频（主要是油管）的发音用例，值得一提的是这个插件并不局限于英语。</p>
+<p>词典功能很完善，有点奇怪的是我觉得Obsidian这个编辑器的功能有点差异，作为一个输入软件能够被查询的词可能用户不太能够直接输入到文档中，而能够输入到文档中的词通常也不需要进行查询，除非用户主动把未知的词汇粘贴进Obsidian来使用这个功能。</p>
+<p>更理想的场景应该是放置到浏览器之类的输出软件因为那里用户能够接触到不了解的词汇从而进行词典查询，要在Obsidian里进行未知词汇查询就比较奇怪。这个插件也没有使用过。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Icear
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.swordandfire.online/2022/04/09/obsidian-plugins/" title="Obsidian插件使用记录">https://blog.swordandfire.online/2022/04/09/obsidian-plugins/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TemplaterCreated/" rel="tag"># TemplaterCreated</a>
+              <a href="/tags/Document/" rel="tag"># Document</a>
+              <a href="/tags/ZKCard/" rel="tag"># ZKCard</a>
+              <a href="/tags/ObsidianPlugin/" rel="tag"># ObsidianPlugin</a>
+              <a href="/tags/Obsidian/" rel="tag"># Obsidian</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/22/mellanox-asap2/" rel="prev" title="Mellanox ASAP2">
+      <i class="fa fa-chevron-left"></i> Mellanox ASAP2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/05/13/veth-introduction/" rel="next" title="Veth">
+      Veth <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Obsidian%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95"><span class="nav-text">Obsidian插件使用记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E7%AB%AF"><span class="nav-text">开端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6"><span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Admonition"><span class="nav-text">Admonition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Advanced-Table"><span class="nav-text">Advanced Table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Auto-Link-Title"><span class="nav-text">Auto Link Title</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Calendar"><span class="nav-text">Calendar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Checklist"><span class="nav-text">Checklist</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cycle-Through-Panes"><span class="nav-text">Cycle Through Panes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataview"><span class="nav-text">Dataview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Day-Planer"><span class="nav-text">Day Planer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Editor-Syntax-Highlight"><span class="nav-text">Editor Syntax Highlight</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-Unlinked-Files"><span class="nav-text">Find Unlinked Files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Incremental-Writing"><span class="nav-text">Incremental Writing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kanban"><span class="nav-text">Kanban</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Obsidian-Linter"><span class="nav-text">Obsidian Linter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Media-Extended"><span class="nav-text">Media Extended</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mind-Map"><span class="nav-text">Mind Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Natural-Language-Dates"><span class="nav-text">Natural Language Dates</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Obsidian-Charts"><span class="nav-text">Obsidian-Charts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Obsidian-Outliner"><span class="nav-text">Obsidian Outliner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pandoc-Plugn"><span class="nav-text">Pandoc Plugn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reminder"><span class="nav-text">Reminder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Self-hosted-LiveSync"><span class="nav-text">Self-hosted LiveSync</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sliding-Panes"><span class="nav-text">Sliding Panes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tasks"><span class="nav-text">Tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Templater"><span class="nav-text">Templater</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Text-Expand"><span class="nav-text">Text Expand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vault-Statistics"><span class="nav-text">Vault Statistics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Workbench"><span class="nav-text">Workbench</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Youglsih-Plugin"><span class="nav-text">Youglsih Plugin</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Icear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/icear" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;icear" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Icear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

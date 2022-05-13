@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.swordandfire.online","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="WSL 是 Windows 下的 Linux 子系统，通过兼容层实现在 Windows 平台上模拟 Linux 环境，不像 WSL2 拥有完整的 Linux 内核。这使得很多依赖内核机制的应用都无法使用，比如说 system-init 和 docker。没有 system-init 支持之后常用的服务管理工具 systemctl 也就失效了，虽然可以通过 service 命令来操作，但是遇到需要自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 supervisor 来管理 WSL 上的服务并实现开机自启动">
+<meta property="og:url" content="https://blog.swordandfire.online/2020/01/17/use-supervisor-to-manage-your-service-in-WSL/index.html">
+<meta property="og:site_name" content="Icear&#39;s blog">
+<meta property="og:description" content="WSL 是 Windows 下的 Linux 子系统，通过兼容层实现在 Windows 平台上模拟 Linux 环境，不像 WSL2 拥有完整的 Linux 内核。这使得很多依赖内核机制的应用都无法使用，比如说 system-init 和 docker。没有 system-init 支持之后常用的服务管理工具 systemctl 也就失效了，虽然可以通过 service 命令来操作，但是遇到需要自">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-01-17T09:46:53.000Z">
+<meta property="article:modified_time" content="2020-01-17T09:46:53.000Z">
+<meta property="article:author" content="Icear">
+<meta property="article:tag" content="Supervisor">
+<meta property="article:tag" content="WSL">
+<meta property="article:tag" content="Service Management">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.swordandfire.online/2020/01/17/use-supervisor-to-manage-your-service-in-WSL/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>使用 supervisor 来管理 WSL 上的服务并实现开机自启动 | Icear's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Icear's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Icear's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>Sitemap</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://blog.swordandfire.online/2020/01/17/use-supervisor-to-manage-your-service-in-WSL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Icear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Icear's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 supervisor 来管理 WSL 上的服务并实现开机自启动
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-17 17:46:53" itemprop="dateCreated datePublished" datetime="2020-01-17T17:46:53+08:00">2020-01-17</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>WSL 是 Windows 下的 Linux 子系统，通过兼容层实现在 Windows 平台上模拟 Linux 环境，不像 WSL2 拥有完整的 Linux 内核。这使得很多依赖内核机制的应用都无法使用，比如说 system-init 和 docker。没有 system-init 支持之后常用的服务管理工具 systemctl 也就失效了，虽然可以通过 service 命令来操作，但是遇到需要自定义服务的时候，service 就显得有些简陋了：需要手写较长的脚本配置外加不支持自动重启等。此时就需要 supervisor 了，基于子进程的服务管理方式不需要内核支持，能够在 WSL 环境很好的工作</p>
+<h2 id="相关细节"><a href="#相关细节" class="headerlink" title="相关细节"></a>相关细节</h2><p>supervisor 可以通过系统自带包管理器安装，又因为是 python 编写，支持通过 pip 安装。但是两者安装的版本上有一些区别。</p>
+<ul>
+<li>通过包管理器安装的 supervisor 会向 &#x2F;etc&#x2F;init.d 目录释放用于 service 命令管理的配置文件（其实就是个脚本文件，所以说有点麻烦写），但是它安装的 supervisor 所依赖的 python 版本会根据当前系统的初始版本变化。比如我这里使用的是 Ubuntu 系统，系统默认为 python2 ，虽然我已经手动切换到了 python 3，但是所安装的 supervisor 依然是基于 python2 版本（这个依赖应该是由 Ubuntu 的包所决定的，大概制作包的时候就是以 python2 为基准制作的吧，并没有根据环境自动选择），于是在安装 python2 版本的 supervisor 而运行环境为 python3 时，运行 supervisor 就会出现如下错误，找不到对应包：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;/usr/bin/supervisord&quot;, line 6, in &lt;module&gt;</span><br><span class="line">    from pkg_resources import load_entry_point</span><br><span class="line">  File &quot;/usr/lib/python3/dist-packages/pkg_resources/__init__.py&quot;, line 3088, in &lt;module&gt;</span><br><span class="line">    @_call_aside</span><br><span class="line">  File &quot;/usr/lib/python3/dist-packages/pkg_resources/__init__.py&quot;, line 3072, in _call_aside</span><br><span class="line">    f(*args, **kwargs)</span><br><span class="line">  File &quot;/usr/lib/python3/dist-packages/pkg_resources/__init__.py&quot;, line 3101, in _initialize_master_working_set</span><br><span class="line">    working_set = WorkingSet._build_master()</span><br><span class="line">  File &quot;/usr/lib/python3/dist-packages/pkg_resources/__init__.py&quot;, line 574, in _build_master</span><br><span class="line">    ws.require(__requires__)</span><br><span class="line">  File &quot;/usr/lib/python3/dist-packages/pkg_resources/__init__.py&quot;, line 892, in require</span><br><span class="line">    needed = self.resolve(parse_requirements(requirements))</span><br><span class="line">  File &quot;/usr/lib/python3/dist-packages/pkg_resources/__init__.py&quot;, line 778, in resolve</span><br><span class="line">    raise DistributionNotFound(req, requirers)</span><br><span class="line">pkg_resources.DistributionNotFound: The &#x27;supervisor==3.3.1&#x27; distribution was not found and is required by the application</span><br></pre></td></tr></table></figure></li>
+<li>通过 pip 安装的 supervisor 能够正常匹配所使用的 python 版本<del>（废话）</del>，但是<ul>
+<li>使用当前用户安装时程序会被放置到家目录的 .local&#x2F;lib&#x2F;python*&#x2F;site-packages&#x2F; 目录下，虽然能够调用但是不是常规位置，不便于管理</li>
+<li>使用 sudo 或 root 权限安装时会安装到 &#x2F;usr&#x2F;local&#x2F;lib&#x2F; 目录下，可执行文件在 &#x2F;usr&#x2F;local&#x2F;bin&#x2F; 目录中，比较正常</li>
+</ul>
+</li>
+</ul>
+<h2 id="最终方案"><a href="#最终方案" class="headerlink" title="最终方案"></a>最终方案</h2><p>配置安装 supervisor 并使其支持通过 service 命令控制启停，然后在 Windows 下设置开机时启动 supervisor 进行，借此启动注册在 supervisor 下的各种服务</p>
+<ul>
+<li>使用默认 python 版本的话可以直接从包管理器安装 supervisor，之后通过以下命令来启动进程，相关配置文件在 &#x2F;etc&#x2F;supervisor&#x2F; 下  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service supervisor start</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h2><h3 id="安装-supervisor-并配置"><a href="#安装-supervisor-并配置" class="headerlink" title="安装 supervisor 并配置"></a>安装 supervisor 并配置</h3><ul>
+<li>使用 python3 但系统默认版本为 python2 的情况，使用 pip 进行全局安装，但配置文件使用包管理器自带版本，即 &#x2F;etc&#x2F;init.d&#x2F; 目录下相关服务管理脚本与 &#x2F;etc&#x2F;supervisor&#x2F; 配置文件目录。这里为了部署方便我会直接贴出从包管理器安装版本提取的服务管理脚本以及 supervisor 配置文件。以下为部署步骤：<ul>
+<li>使用 pip 全局安装 supervisor   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install supervisor</span><br></pre></td></tr></table></figure></li>
+<li>创建服务管理脚本  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/init.d/supervisor</span><br></pre></td></tr></table></figure>
+  以下为脚本内容，已修改程序路径  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/sh</span><br><span class="line">#</span><br><span class="line"># skeleton      example file to build /etc/init.d/ scripts.</span><br><span class="line">#               This file should be used to construct scripts for /etc/init.d.</span><br><span class="line">#</span><br><span class="line">#               Written by Miquel van Smoorenburg &lt;miquels@cistron.nl&gt;.</span><br><span class="line">#               Modified for Debian</span><br><span class="line">#               by Ian Murdock &lt;imurdock@gnu.ai.mit.edu&gt;.</span><br><span class="line">#               Further changes by Javier Fernandez-Sanguino &lt;jfs@debian.org&gt;</span><br><span class="line">#</span><br><span class="line"># Version:      @(#)skeleton  1.9  26-Feb-2001  miquels@cistron.nl</span><br><span class="line">#</span><br><span class="line">### BEGIN INIT INFO</span><br><span class="line"># Provides:          supervisor</span><br><span class="line"># Required-Start:    $remote_fs $network $named</span><br><span class="line"># Required-Stop:     $remote_fs $network $named</span><br><span class="line"># Default-Start:     2 3 4 5</span><br><span class="line"># Default-Stop:      0 1 6</span><br><span class="line"># Short-Description: Start/stop supervisor</span><br><span class="line"># Description:       Start/stop supervisor daemon and its configured</span><br><span class="line">#                    subprocesses.</span><br><span class="line">### END INIT INFO</span><br><span class="line"></span><br><span class="line">. /lib/lsb/init-functions</span><br><span class="line"></span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">DAEMON=/usr/local/bin/supervisord</span><br><span class="line">NAME=supervisord</span><br><span class="line">DESC=supervisor</span><br><span class="line"></span><br><span class="line">test -x $DAEMON || exit 0</span><br><span class="line"></span><br><span class="line">RETRY=TERM/30/KILL/5</span><br><span class="line">LOGDIR=/var/log/supervisor</span><br><span class="line">PIDFILE=/var/run/$NAME.pid</span><br><span class="line">DODTIME=5                   # Time to wait for the server to die, in seconds</span><br><span class="line">                            # If this value is set too low you might not</span><br><span class="line">                            # let some servers to die gracefully and</span><br><span class="line">                            # &#x27;restart&#x27; will not work</span><br><span class="line"></span><br><span class="line"># Include supervisor defaults if available</span><br><span class="line">if [ -f /etc/default/supervisor ] ; then</span><br><span class="line">        . /etc/default/supervisor</span><br><span class="line">fi</span><br><span class="line">DAEMON_OPTS=&quot;-c /etc/supervisor/supervisord.conf $DAEMON_OPTS&quot;</span><br><span class="line"></span><br><span class="line">set -e</span><br><span class="line"></span><br><span class="line">running_pid()</span><br><span class="line">&#123;</span><br><span class="line">    # Check if a given process pid&#x27;s cmdline matches a given name</span><br><span class="line">    pid=$1</span><br><span class="line">    name=$2</span><br><span class="line">    [ -z &quot;$pid&quot; ] &amp;&amp; return 1</span><br><span class="line">    [ ! -d /proc/$pid ] &amp;&amp;  return 1</span><br><span class="line">    (cat /proc/$pid/cmdline | tr &quot;\000&quot; &quot;\n&quot;|grep -q $name) || return 1</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">running()</span><br><span class="line">&#123;</span><br><span class="line"># Check if the process is running looking at /proc</span><br><span class="line"># (works for all users)</span><br><span class="line"></span><br><span class="line">    # No pidfile, probably no daemon present</span><br><span class="line">    [ ! -f &quot;$PIDFILE&quot; ] &amp;&amp; return 1</span><br><span class="line">    # Obtain the pid and check it against the binary name</span><br><span class="line">    pid=`cat $PIDFILE`</span><br><span class="line">    running_pid $pid $DAEMON || return 1</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">start)</span><br><span class="line">        echo -n &quot;Starting $DESC: &quot;</span><br><span class="line">        start-stop-daemon --start --quiet --pidfile $PIDFILE \</span><br><span class="line">                --startas $DAEMON -- $DAEMON_OPTS</span><br><span class="line">        test -f $PIDFILE || sleep 1</span><br><span class="line">        if running ; then</span><br><span class="line">            echo &quot;$NAME.&quot;</span><br><span class="line">        else</span><br><span class="line">            echo &quot; ERROR.&quot;</span><br><span class="line">        fi</span><br><span class="line">        ;;</span><br><span class="line">stop)</span><br><span class="line">        echo -n &quot;Stopping $DESC: &quot;</span><br><span class="line">        # [ -f $PIDFILE ] &amp;&amp; killproc $prog || success $&quot;$prog shutdown&quot;</span><br><span class="line">        start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE</span><br><span class="line">        echo &quot;$NAME.&quot;</span><br><span class="line">        ;;</span><br><span class="line">#reload)</span><br><span class="line">        #</span><br><span class="line">        #       If the daemon can reload its config files on the fly</span><br><span class="line">        #       for example by sending it SIGHUP, do it here.</span><br><span class="line">        #</span><br><span class="line">        #       If the daemon responds to changes in its config file</span><br><span class="line">        #       directly anyway, make this a do-nothing entry.</span><br><span class="line">        #</span><br><span class="line">        # echo &quot;Reloading $DESC configuration files.&quot;</span><br><span class="line">        # start-stop-daemon --stop --signal 1 --quiet --pidfile \</span><br><span class="line">        #       /var/run/$NAME.pid --exec $DAEMON</span><br><span class="line">#;;</span><br><span class="line">force-reload)</span><br><span class="line">        #</span><br><span class="line">        #       If the &quot;reload&quot; option is implemented, move the &quot;force-reload&quot;</span><br><span class="line">        #       option to the &quot;reload&quot; entry above. If not, &quot;force-reload&quot; is</span><br><span class="line">        #       just the same as &quot;restart&quot; except that it does nothing if the</span><br><span class="line">        #   daemon isn&#x27;t already running.</span><br><span class="line">        # check wether $DAEMON is running. If so, restart</span><br><span class="line">        start-stop-daemon --stop --test --quiet --pidfile $PIDFILE \</span><br><span class="line">        --startas $DAEMON \</span><br><span class="line">        &amp;&amp; $0 restart \</span><br><span class="line">        || exit 0</span><br><span class="line">        ;;</span><br><span class="line">restart)</span><br><span class="line">    echo -n &quot;Restarting $DESC: &quot;</span><br><span class="line">    start-stop-daemon --stop --retry=$RETRY --quiet --oknodo --pidfile $PIDFILE</span><br><span class="line">        echo &quot;$NAME.&quot;</span><br><span class="line">        ;;</span><br><span class="line">status)</span><br><span class="line">    echo -n &quot;$NAME is &quot;</span><br><span class="line">    if running ;  then</span><br><span class="line">        echo &quot;running&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot; not running.&quot;</span><br><span class="line">        exit 1</span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">*)</span><br><span class="line">        N=/etc/init.d/$NAME</span><br><span class="line">        # echo &quot;Usage: $N &#123;start|stop|restart|reload|force-reload&#125;&quot; &gt;&amp;2</span><br><span class="line">        echo &quot;Usage: $N &#123;start|stop|restart|force-reload|status&#125;&quot; &gt;&amp;2</span><br><span class="line">        exit 1</span><br><span class="line">        ;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure></li>
+<li>创建配置目录  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir /etc/supervisor</span><br><span class="line">sudo mkdir /etc/supervisor/conf.d</span><br><span class="line">sudo vi /etc/supervisor/supervisord.conf</span><br></pre></td></tr></table></figure>
+  以下为脚本内容  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">; supervisor config file</span><br><span class="line"></span><br><span class="line">[unix_http_server]</span><br><span class="line">file=/var/run/supervisor.sock   ; (the path to the socket file)</span><br><span class="line">chmod=0700                       ; sockef file mode (default 0700)</span><br><span class="line"></span><br><span class="line">[supervisord]</span><br><span class="line">logfile=/var/log/supervisor/supervisord.log ; (main log file;default $CWD/supervisord.log)</span><br><span class="line">pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)</span><br><span class="line">childlogdir=/var/log/supervisor            ; (&#x27;AUTO&#x27; child log dir, default $TEMP)</span><br><span class="line"></span><br><span class="line">; the below section must remain in the config file for RPC</span><br><span class="line">; (supervisorctl/web interface) to work, additional interfaces may be</span><br><span class="line">; added by defining them in separate rpcinterface: sections</span><br><span class="line">[rpcinterface:supervisor]</span><br><span class="line">supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface</span><br><span class="line"></span><br><span class="line">[supervisorctl]</span><br><span class="line">serverurl=unix:///var/run/supervisor.sock ; use a unix:// URL  for a unix socket</span><br><span class="line"></span><br><span class="line">; The [include] section can just contain the &quot;files&quot; setting.  This</span><br><span class="line">; setting can list multiple files (separated by whitespace or</span><br><span class="line">; newlines).  It can also contain wildcards.  The filenames are</span><br><span class="line">; interpreted as relative to this file.  Included files *cannot*</span><br><span class="line">; include files themselves.</span><br><span class="line"></span><br><span class="line">[include]</span><br><span class="line">files = /etc/supervisor/conf.d/*.conf</span><br></pre></td></tr></table></figure></li>
+<li>至此配置结束，启动服务的命令为 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service supervisor start</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="设置自启动"><a href="#设置自启动" class="headerlink" title="设置自启动"></a>设置自启动</h3><ul>
+<li>使用 Windows + R 快捷键调出运行窗口，输入   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell:startup</span><br></pre></td></tr></table></figure></li>
+<li>在弹出的文件目录下创建一个快捷方式，名称任意，其执行命令设为   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\System32\wsl.exe -u root service supervisor start</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>至此所有的操作就完成了，向 supervisor 配置的各种服务也能够正常运作，具体的配置方式可以查阅官方文档。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Icear
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.swordandfire.online/2020/01/17/use-supervisor-to-manage-your-service-in-WSL/" title="使用 supervisor 来管理 WSL 上的服务并实现开机自启动">https://blog.swordandfire.online/2020/01/17/use-supervisor-to-manage-your-service-in-WSL/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Supervisor/" rel="tag"># Supervisor</a>
+              <a href="/tags/WSL/" rel="tag"># WSL</a>
+              <a href="/tags/Service-Management/" rel="tag"># Service Management</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/15/github-ssh-access-using-config/" rel="prev" title="Linux 下配置通过 SSH KEY 访问 Github 以及自定义 key 名后的配置">
+      <i class="fa fa-chevron-left"></i> Linux 下配置通过 SSH KEY 访问 Github 以及自定义 key 名后的配置
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/01/27/python-urllib3-support-proxy-with-dns-resolve/" rel="next" title="Urllib 通过 socks 协议解析 DNS">
+      Urllib 通过 socks 协议解析 DNS <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%BB%86%E8%8A%82"><span class="nav-text">相关细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E6%96%B9%E6%A1%88"><span class="nav-text">最终方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="nav-text">配置步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-supervisor-%E5%B9%B6%E9%85%8D%E7%BD%AE"><span class="nav-text">安装 supervisor 并配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="nav-text">设置自启动</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Icear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/icear" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;icear" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Icear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

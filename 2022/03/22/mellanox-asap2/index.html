@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.1.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.swordandfire.online","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Mellanox ASAP2定义Accelerated Switching and Packet Processing 加速交换与数据报处理技术，原由Mellanox提出但在Nvidia收购后更名为 Nvidia ASAP2 应对场景主要针对高速网络下的加速网络数据包场景，传统网络数据包处理需要将网络通信数据包全部提交至CPU进行处理，这些处理过程占用了CPU资源并且开销日益增大 应对思路让网卡接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mellanox ASAP2">
+<meta property="og:url" content="https://blog.swordandfire.online/2022/03/22/mellanox-asap2/index.html">
+<meta property="og:site_name" content="Icear&#39;s blog">
+<meta property="og:description" content="Mellanox ASAP2定义Accelerated Switching and Packet Processing 加速交换与数据报处理技术，原由Mellanox提出但在Nvidia收购后更名为 Nvidia ASAP2 应对场景主要针对高速网络下的加速网络数据包场景，传统网络数据包处理需要将网络通信数据包全部提交至CPU进行处理，这些处理过程占用了CPU资源并且开销日益增大 应对思路让网卡接">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-03-22T09:14:00.000Z">
+<meta property="article:modified_time" content="2022-05-13T10:05:00.000Z">
+<meta property="article:author" content="Icear">
+<meta property="article:tag" content="TemplaterCreated">
+<meta property="article:tag" content="Document">
+<meta property="article:tag" content="ZKCard">
+<meta property="article:tag" content="Network">
+<meta property="article:tag" content="Mellanox">
+<meta property="article:tag" content="Nvidia">
+<meta property="article:tag" content="HardwareAccleration">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.swordandfire.online/2022/03/22/mellanox-asap2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'cn'
+  };
+</script>
+
+  <title>Mellanox ASAP2 | Icear's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Icear's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Icear's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-fw fa-sitemap"></i>Sitemap</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="cn">
+    <link itemprop="mainEntityOfPage" href="https://blog.swordandfire.online/2022/03/22/mellanox-asap2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Icear">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Icear's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mellanox ASAP2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-22 17:14:00" itemprop="dateCreated datePublished" datetime="2022-03-22T17:14:00+08:00">2022-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-05-13 18:05:00" itemprop="dateModified" datetime="2022-05-13T18:05:00+08:00">2022-05-13</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Mellanox-ASAP2"><a href="#Mellanox-ASAP2" class="headerlink" title="Mellanox ASAP2"></a>Mellanox ASAP2</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>Accelerated Switching and Packet Processing</p>
+<p>加速交换与数据报处理技术，原由Mellanox提出但在Nvidia收购后更名为 Nvidia ASAP2</p>
+<h2 id="应对场景"><a href="#应对场景" class="headerlink" title="应对场景"></a>应对场景</h2><p>主要针对高速网络下的加速网络数据包场景，传统网络数据包处理需要将网络通信数据包全部提交至CPU进行处理，这些处理过程占用了CPU资源并且开销日益增大</p>
+<h2 id="应对思路"><a href="#应对思路" class="headerlink" title="应对思路"></a>应对思路</h2><p>让网卡接管网络IO的处理，并且在硬件上完成原本CPU需要进行的网络数据解析任务，并且携带网络数据分流的特性，支持Single Root Virtualization等方式模拟出多个网络设备，将不同的网络流量分别呈递，能够接入[[OpenVirtualSwitch]] 虚拟交换或其它虚拟网络，使得这一过程对CPU的开销降低到非常低的程度，从而达到硬件加速的效果</p>
+<h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Benchmarks show that on a server with a 25G interface, OVS accelerated by ASAP2 Direct achieves 33 million packets per second (mpps) for a single flow with near-zero CPU cores consumed by the OVS data plane, and about 18 mpps with 60,000 flows performing VXLAN encap/decap. These performance results are three to ten times higher than DPDK-accelerated OVS. ASAP2 offers the best of both worlds, software-defined flexible network programmability, and high network I/O performance for the state-of-art speeds from 10G to 25/40/50/100/200G.</span><br></pre></td></tr></table></figure>
+
+<p>25G 端口下，通过<code>ASAP2 Direct</code> 技术能够处理单条流33mpps数据包，且无CPU占用，在<code>VXLAN</code>解包生成包操作下能够达到最多6万条流一共18mpps的性能</p>
+<p>目前此技术可应用在25&#x2F;40&#x2F;50&#x2F;100&#x2F;200G网络通信模式中</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://network.nvidia.com/pdf/products/SB_asap2.pdf">https://network.nvidia.com/pdf/products/SB_asap2.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/networking/display/MLNXENv493150/OVS+Offload+Using+ASAP2+Direct">OVS Offload Using ASAP2 Direct - MLNX_EN v4.9-3.1.5.0 LTS - NVIDIA Networking Docs</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Icear
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.swordandfire.online/2022/03/22/mellanox-asap2/" title="Mellanox ASAP2">https://blog.swordandfire.online/2022/03/22/mellanox-asap2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TemplaterCreated/" rel="tag"># TemplaterCreated</a>
+              <a href="/tags/Document/" rel="tag"># Document</a>
+              <a href="/tags/ZKCard/" rel="tag"># ZKCard</a>
+              <a href="/tags/Network/" rel="tag"># Network</a>
+              <a href="/tags/Mellanox/" rel="tag"># Mellanox</a>
+              <a href="/tags/Nvidia/" rel="tag"># Nvidia</a>
+              <a href="/tags/HardwareAccleration/" rel="tag"># HardwareAccleration</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/09/wsl2-53-dns-port-in-use-resolution/" rel="prev" title="WSL2占用53端口的解决方案">
+      <i class="fa fa-chevron-left"></i> WSL2占用53端口的解决方案
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/09/obsidian-plugins/" rel="next" title="Obsidian插件使用记录">
+      Obsidian插件使用记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mellanox-ASAP2"><span class="nav-text">Mellanox ASAP2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E5%AF%B9%E5%9C%BA%E6%99%AF"><span class="nav-text">应对场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E5%AF%B9%E6%80%9D%E8%B7%AF"><span class="nav-text">应对思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-text">性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Icear</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/icear" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;icear" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Icear</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

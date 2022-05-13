@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/index.html</loc>
+    
+    <lastmod>2022-05-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2022/05/13/veth-introduction/</loc>
+    
+    <lastmod>2022-05-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2022/04/09/obsidian-plugins/</loc>
+    
+    <lastmod>2022-05-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2022/03/22/mellanox-asap2/</loc>
+    
+    <lastmod>2022-05-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2022/03/08/dataview/</loc>
+    
+    <lastmod>2022-05-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2022/03/09/dpdk-environment-setup/</loc>
+    
+    <lastmod>2022-04-13</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2022/03/09/wsl2-53-dns-port-in-use-resolution/</loc>
+    
+    <lastmod>2022-03-09</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2022/02/26/zinit-introduction/</loc>
+    
+    <lastmod>2022-02-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2020/03/21/c-use-priority-queue-with-custom-compare-function/</loc>
+    
+    <lastmod>2020-03-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2020/01/27/python-urllib3-support-proxy-with-dns-resolve/</loc>
+    
+    <lastmod>2020-01-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2020/01/17/use-supervisor-to-manage-your-service-in-WSL/</loc>
+    
+    <lastmod>2020-01-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2020/01/15/github-ssh-access-using-config/</loc>
+    
+    <lastmod>2020-01-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/2019/04/18/@CreateDate-and-@CreationTimeStamp/</loc>
+    
+    <lastmod>2019-04-18</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  <url>
+    <loc>https://blog.swordandfire.online/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/c/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/queue/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/priority-queue/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/cmp/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/operator-extend/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/TemplaterCreated/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Document/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/ZKCard/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/ObsidianPlugin/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Obsidian/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Network/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Linux/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Github/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/SSH-key/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Mellanox/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Nvidia/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/HardwareAccleration/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/urllib/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/socks/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/dns/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Supervisor/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/WSL/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Service-Management/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/LinuxKernel/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Virtualization/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Container/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.swordandfire.online/tags/Computer/</loc>
+    <lastmod>2022-05-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+</urlset>
